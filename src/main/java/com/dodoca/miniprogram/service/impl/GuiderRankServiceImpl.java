@@ -48,9 +48,10 @@ public class GuiderRankServiceImpl implements GuiderRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGuiderRank);
-        HashMap<String, Object> detailMap = new HashMap<>();
+
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
+            HashMap<String, Object> detailMap = new HashMap<>();
             int member_id = rs.getInt("member_id");
             String nickname = rs.getString("guider_name");
             String mobile = rs.getString("mobile");
@@ -67,8 +68,9 @@ public class GuiderRankServiceImpl implements GuiderRankService {
             detailMap.put("order_num", order_num);
             detailMap.put("order_amount", order_amount);
             detailMap.put("commission_amount", commission_amount);
+            dataList.add(detailMap);
         }
-        dataList.add(detailMap);
+
         ImpalaJdbc.close(null, pst, conn);
         return dataList;
     }

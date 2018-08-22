@@ -25,9 +25,10 @@ public class GuiderSubRankServiceImpl implements GuiderSubRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGuiderSubRank);
-        HashMap<String, Object> detailMap = new HashMap<>();
+
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
+            HashMap<String, Object> detailMap = new HashMap<>();
             String nick_name = rs.getString("guider_name");
             String avatar = rs.getString("avatar");
             int result = rs.getInt("l_guider_count");
@@ -36,8 +37,9 @@ public class GuiderSubRankServiceImpl implements GuiderSubRankService {
             detailMap.put("avatar", avatar);
             detailMap.put("result",result);
             detailMap.put("rank",rank);
+            dataList.add(detailMap);
         }
-        dataList.add(detailMap);
+
         ImpalaJdbc.close(null, pst, conn);
         return dataList;
     }
@@ -51,9 +53,10 @@ public class GuiderSubRankServiceImpl implements GuiderSubRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGuiderSubRank);
-        HashMap<String, Object> detailMap = new HashMap<>();
+
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
+            HashMap<String, Object> detailMap = new HashMap<>();
             String nick_name = rs.getString("guider_name");
             String avatar = rs.getString("avatar");
             double total_comission = rs.getDouble("total_comission");
@@ -62,8 +65,9 @@ public class GuiderSubRankServiceImpl implements GuiderSubRankService {
             detailMap.put("avatar", avatar);
             detailMap.put("total_comission",total_comission);
             detailMap.put("rank",rank);
+            dataList.add(detailMap);
         }
-        dataList.add(detailMap);
+
         ImpalaJdbc.close(null, pst, conn);
         return dataList;
     }

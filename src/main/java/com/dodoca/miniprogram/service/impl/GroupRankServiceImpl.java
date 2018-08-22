@@ -28,15 +28,17 @@ public class GroupRankServiceImpl implements GroupRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGroupRank);
-        HashMap<String, Object> detailMap = new HashMap<>();
+
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
+            HashMap<String, Object> detailMap = new HashMap<>();
             String chat_group_id = rs.getString("chat_group_id");
             int result = rs.getInt("click_count");
             detailMap.put("chat_group_id", chat_group_id);
             detailMap.put("result", result);
+            dataList.add(detailMap);
         }
-        dataList.add(detailMap);
+
         ImpalaJdbc.close(null, pst, conn);
         return dataList;
     }

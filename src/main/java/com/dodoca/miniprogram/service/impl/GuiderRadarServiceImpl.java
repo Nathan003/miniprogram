@@ -41,15 +41,17 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
         List<Map<String, Object>> detailList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getDetails);
-        HashMap<String, Object> detailMap = new HashMap<>();
+
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
+            HashMap<String, Object> detailMap = new HashMap<>();
             String date = rs.getString("day");
             int total = rs.getInt("guider_new_day");
             detailMap.put("date", date);
             detailMap.put("total", total);
+            detailList.add(detailMap);
         }
-        detailList.add(detailMap);
+
         ImpalaJdbc.close(null, pst, conn);
         return detailList;
     }
@@ -101,17 +103,19 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
         List<Map<String, Object>> detailList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getOrderDetails);
-        HashMap<String, Object> detailMap = new HashMap<>();
+
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
+            HashMap<String, Object> detailMap = new HashMap<>();
             String date = rs.getString("day");
             double order_amount = rs.getDouble("order_amount_day");
             int order_number = rs.getInt("order_count_day");
             detailMap.put("date", date);
             detailMap.put("order_amount", order_amount);
             detailMap.put("order_number",order_number);
+            detailList.add(detailMap);
         }
-        detailList.add(detailMap);
+
         ImpalaJdbc.close(null, pst, conn);
         return detailList;
     }
