@@ -14,7 +14,7 @@ import java.util.HashMap;
 @Service
 public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     @Override
-    @Cacheable(value = "getTotalBrowseData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getTotalBrowseData' + #merchant_id")
     public HashMap<String, Object> getTotalBrowseData(String merchant_id) throws SQLException {
 
         String getTotalBrowseData = "select merchant_id,goods_name,browse_goods_cnt_total,g_rank_total\n" +
@@ -37,7 +37,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getTotalBuyData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getTotalBuyData' + #merchant_id")
     public HashMap<String, Object> getTotalBuyData(String merchant_id) throws SQLException {
         String getTotalBuyData = "select merchant_id,goods_name,order_goods_cnt_total,og_rank_total\n" +
                 "from query_result_buy_rank\n" +
@@ -59,7 +59,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getTotalRebuysData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getTotalRebuysData' + #merchant_id")
     public HashMap<String, Object> getTotalRebuysData(String merchant_id) throws SQLException {
         String getTotalRebuysData = "select merchant_id,goods_name,rebuy_percent,rebuy_percent_rank\n" +
                 "from query_result_rebuy_percent_rank\n" +
@@ -81,7 +81,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getYestodayBrowseData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getYestodayBrowseData' + #merchant_id")
     public HashMap<String, Object> getYestodayBrowseData(String merchant_id) throws SQLException {
         String getYestodayBrowseData = "select merchant_id,goods_name,browse_goods_cnt_1,g_rank_1\n" +
                 "from query_result_browse_rank\n" +
@@ -103,7 +103,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getYestodayBuyData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getYestodayBuyData' + #merchant_id")
     public HashMap<String, Object> getYestodayBuyData(String merchant_id) throws SQLException {
         String getYestodayBuyData = "select merchant_id,goods_name,order_goods_cnt_1,og_rank_1\n" +
                 "from query_result_buy_rank\n" +
@@ -125,7 +125,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getYestodayRebuysData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getYestodayRebuysData' + #merchant_id")
     public HashMap<String, Object> getYestodayRebuysData(String merchant_id) throws SQLException {
         String getYestodayRebuysData = "select merchant_id,goods_name,rebuy_percent,rebuy_percent_rank\n" +
                 "from query_result_rebuy_percent_rank\n" +
@@ -147,7 +147,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getSevendayBrowseData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getSevendayBrowseData' + #merchant_id")
     public HashMap<String, Object> getSevendayBrowseData(String merchant_id) throws SQLException {
         String getSevendayBrowseData = "select merchant_id,goods_name,browse_goods_cnt_7,g_rank_7\n" +
                 "from query_result_browse_rank\n" +
@@ -169,7 +169,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getSevendayBuyData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getSevendayBuyData' + #merchant_id")
     public HashMap<String, Object> getSevendayBuyData(String merchant_id) throws SQLException {
         String getSevendayBuyData = "select merchant_id,goods_name,order_goods_cnt_7,og_rank_7\n" +
                 "from query_result_buy_rank\n" +
@@ -191,7 +191,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getSevendayRebuysData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getSevendayRebuysData' + #merchant_id")
     public HashMap<String, Object> getSevendayRebuysData(String merchant_id) throws SQLException {
         String getSevendayRebuysData = "select merchant_id,goods_name,rebuy_percent,rebuy_percent_rank\n" +
                 "from query_result_rebuy_percent_rank\n" +
@@ -213,7 +213,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getThirtydayBrowseData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getThirtydayBrowseData' + #merchant_id")
     public HashMap<String, Object> getThirtydayBrowseData(String merchant_id) throws SQLException {
         String getThirtydayBrowseData = "select merchant_id,goods_name,browse_goods_cnt_30,g_rank_30\n" +
                 "from query_result_browse_rank\n" +
@@ -235,7 +235,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getThirtydayBuyData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getThirtydayBuyData' + #merchant_id")
     public HashMap<String, Object> getThirtydayBuyData(String merchant_id) throws SQLException {
         String getThirtydayBuyData = "select merchant_id,goods_name,order_goods_cnt_30,og_rank_30\n" +
                 "from query_result_buy_rank\n" +
@@ -257,7 +257,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     }
 
     @Override
-    @Cacheable(value = "getThirtydayRebuysData")
+    @Cacheable(value = "HomePageGoodsRankServiceImpl", key = "'getThirtydayRebuysData' + #merchant_id")
     public HashMap<String, Object> getThirtydayRebuysData(String merchant_id) throws SQLException {
         String getThirtydayRebuysData = "select merchant_id,goods_name,rebuy_percent,rebuy_percent_rank\n" +
                 "from query_result_rebuy_percent_rank\n" +

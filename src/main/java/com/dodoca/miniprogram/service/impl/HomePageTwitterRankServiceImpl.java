@@ -14,7 +14,7 @@ import java.util.HashMap;
 @Service
 public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankService {
     @Override
-    @Cacheable(value = "getTotalTwitterSubData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getTotalTwitterSubData' + #merchant_id")
     public HashMap<String, Object> getTotalTwitterSubData(String merchant_id) throws SQLException {
         String getTotalTwitterSubData = "select merchant_id,guider_name,guider_count,gd_rank_total\n" +
                 "from query_result_guider_low_lv_cnt\n" +
@@ -36,7 +36,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getTotalCommissionSubData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getTotalCommissionSubData' + #merchant_id")
     public HashMap<String, Object> getTotalCommissionSubData(String merchant_id) throws SQLException {
         String getTotalCommissionSubData = "select merchant_id,guider_name,comission_guider_count,cn_guider_rank_total\n" +
                 "from query_result_comission_low_lv_cnt\n" +
@@ -58,10 +58,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getTotalOrderSumData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getTotalOrderSumData' + #merchant_id")
     public HashMap<String, Object> getTotalOrderSumData(String merchant_id) throws SQLException {
         String getTotalOrderSumData = "select merchant_id,guider_name,order_count_total,order_count_rank_total\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getTotalOrderSumData);
@@ -80,10 +80,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getTotalOrderAmountData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getTotalOrderAmountData' + #merchant_id")
     public HashMap<String, Object> getTotalOrderAmountData(String merchant_id) throws SQLException {
-        String getTotalOrderAmountData = "select merchant_id,guider_name,order_amount_total,order_amount_total\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+        String getTotalOrderAmountData = "select merchant_id,guider_name,comission_total,comission_rank_total\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getTotalOrderAmountData);
@@ -92,23 +92,39 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
         while (rs.next()) {
             String guider_name = rs.getString("guider_name");
             int order_amount_total = rs.getInt("order_amount_total");
-//            int order_amount_total = rs.getInt("order_amount_total");
+            int comission_rank_total = rs.getInt("comission_rank_total");
             detailMap.put("name", guider_name);
             detailMap.put("sum", order_amount_total);
-            detailMap.put("rank", order_amount_total);
+            detailMap.put("rank", comission_rank_total);
         }
         ImpalaJdbc.close(null, pst, conn);
         return detailMap;
     }
 
     @Override
-    @Cacheable(value = "getTotalCommissionAmountsData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getTotalCommissionAmountsData' + #merchant_id")
     public HashMap<String, Object> getTotalCommissionAmountsData(String merchant_id) throws SQLException {
-        return null;
+        String getTotalCommissionAmountsData = "select merchant_id,guider_name,comission_total,comission_rank_total\n" +
+                "from query_result_guider_order\n" +
+                "where merchant_id=" + merchant_id + ";";
+        Connection conn = ImpalaJdbc.getImpalaConnection();
+        PreparedStatement pst = conn.prepareStatement(getTotalCommissionAmountsData);
+        HashMap<String, Object> detailMap = new HashMap<>();
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            String guider_name = rs.getString("guider_name");
+            int comission_total = rs.getInt("comission_total");
+            int comission_rank_total = rs.getInt("comission_rank_total");
+            detailMap.put("name", guider_name);
+            detailMap.put("sum", comission_total);
+            detailMap.put("rank", comission_rank_total);
+        }
+        ImpalaJdbc.close(null, pst, conn);
+        return detailMap;
     }
 
     @Override
-    @Cacheable(value = "getYestodayTwitterSubData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getYestodayTwitterSubData' + #merchant_id")
     public HashMap<String, Object> getYestodayTwitterSubData(String merchant_id) throws SQLException {
         String getYestodayTwitterSubData = "select merchant_id,guider_name,guider_count_1,gd_rank_1\n" +
                 "from query_result_guider_low_lv_cnt\n" +
@@ -130,7 +146,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getYestodayCommissionSubData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getYestodayCommissionSubData' + #merchant_id")
     public HashMap<String, Object> getYestodayCommissionSubData(String merchant_id) throws SQLException {
         String getYestodayCommissionSubData = "select merchant_id,guider_name,comission_guider_count_1,cn_guider_rank_1\n" +
                 "from query_result_comission_low_lv_cnt\n" +
@@ -152,10 +168,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getYestodayOrderSumData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getYestodayOrderSumData' + #merchant_id")
     public HashMap<String, Object> getYestodayOrderSumData(String merchant_id) throws SQLException {
         String getYestodayOrderSumData = "select merchant_id,guider_name,order_count_1,order_count_rank_1\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getYestodayOrderSumData);
@@ -174,10 +190,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getYestodayOrderAmountData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getYestodayOrderAmountData' + #merchant_id")
     public HashMap<String, Object> getYestodayOrderAmountData(String merchant_id) throws SQLException {
         String getYestodayOrderAmountData = "select merchant_id,guider_name,order_amount_1,order_amount_rank_1\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getYestodayOrderAmountData);
@@ -196,10 +212,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getYestodayCommissionAmountsData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getYestodayCommissionAmountsData' + #merchant_id")
     public HashMap<String, Object> getYestodayCommissionAmountsData(String merchant_id) throws SQLException {
         String getYestodayCommissionAmountsData = "select merchant_id,guider_name,comission_1,comission_rank_1\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getYestodayCommissionAmountsData);
@@ -218,7 +234,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getSevenTwitterSubData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getSevenTwitterSubData' + #merchant_id")
     public HashMap<String, Object> getSevenTwitterSubData(String merchant_id) throws SQLException {
         String getSevenTwitterSubData = "select merchant_id,guider_name,guider_count_7,gd_rank_7\n" +
                 "from query_result_guider_low_lv_cnt\n" +
@@ -240,7 +256,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getSevenCommissionSubData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getSevenCommissionSubData' + #merchant_id")
     public HashMap<String, Object> getSevenCommissionSubData(String merchant_id) throws SQLException {
         String getSevenCommissionSubData = "select merchant_id,guider_name,comission_guider_count_7,cn_guider_rank_17\n" +
                 "from query_result_comission_low_lv_cnt\n" +
@@ -262,10 +278,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getSevenOrderSumData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getSevenOrderSumData' + #merchant_id")
     public HashMap<String, Object> getSevenOrderSumData(String merchant_id) throws SQLException {
         String getSevenOrderSumData = "select merchant_id,guider_name,order_count_7,order_count_rank_7\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevenOrderSumData);
@@ -284,10 +300,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getSevenOrderAmountData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getSevenOrderAmountData' + #merchant_id")
     public HashMap<String, Object> getSevenOrderAmountData(String merchant_id) throws SQLException {
         String getSevenOrderAmountData = "select merchant_id,guider_name,order_amount_7,order_amount_rank_7\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevenOrderAmountData);
@@ -306,10 +322,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getSevenCommissionAmountsData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getSevenCommissionAmountsData' + #merchant_id")
     public HashMap<String, Object> getSevenCommissionAmountsData(String merchant_id) throws SQLException {
         String getSevenCommissionAmountsData = "select merchant_id,guider_name,comission_7,comission_rank_7\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevenCommissionAmountsData);
@@ -328,7 +344,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getMonthTwitterSubData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getMonthTwitterSubData' + #merchant_id")
     public HashMap<String, Object> getMonthTwitterSubData(String merchant_id) throws SQLException {
         String getMonthTwitterSubData = "select merchant_id,guider_name,guider_count_30,gd_rank_30\n" +
                 "from query_result_guider_low_lv_cnt\n" +
@@ -350,9 +366,9 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getMonthCommissionSubData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getMonthCommissionSubData' + #merchant_id")
     public HashMap<String, Object> getMonthCommissionSubData(String merchant_id) throws SQLException {
-        String getMonthCommissionSubData = "select merchant_id,guider_name,comission_guider_count_30,cn_guider_rank_130\n" +
+        String getMonthCommissionSubData = "select merchant_id,guider_name,comission_guider_count_30,cn_guider_rank_30\n" +
                 "from query_result_comission_low_lv_cnt\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
@@ -362,20 +378,20 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
         while (rs.next()) {
             String guider_name = rs.getString("guider_name");
             int comission_guider_count_30 = rs.getInt("comission_guider_count_30");
-            int cn_guider_rank_130 = rs.getInt("cn_guider_rank_130");
+            int cn_guider_rank_30 = rs.getInt("cn_guider_rank_30");
             detailMap.put("name", guider_name);
             detailMap.put("sum", comission_guider_count_30);
-            detailMap.put("rank", cn_guider_rank_130);
+            detailMap.put("rank", cn_guider_rank_30);
         }
         ImpalaJdbc.close(null, pst, conn);
         return detailMap;
     }
 
     @Override
-    @Cacheable(value = "getMonthOrderSumData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getMonthOrderSumData' + #merchant_id")
     public HashMap<String, Object> getMonthOrderSumData(String merchant_id) throws SQLException {
         String getMonthOrderSumData = "select merchant_id,guider_name,order_count_30,order_count_rank_30\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getMonthOrderSumData);
@@ -394,10 +410,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getMonthOrderAmountData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getMonthOrderAmountData' + #merchant_id")
     public HashMap<String, Object> getMonthOrderAmountData(String merchant_id) throws SQLException {
         String getMonthOrderAmountData = "select merchant_id,guider_name,order_amount_30,order_amount_rank_30\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getMonthOrderAmountData);
@@ -416,10 +432,10 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
     }
 
     @Override
-    @Cacheable(value = "getMonthCommissionAmountsData")
+    @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getMonthCommissionAmountsData' + #merchant_id")
     public HashMap<String, Object> getMonthCommissionAmountsData(String merchant_id) throws SQLException {
         String getMonthCommissionAmountsData = "select merchant_id,guider_name,comission_30,comission_rank_30\n" +
-                "from query_result_comission_low_lv_cnt\n" +
+                "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getMonthCommissionAmountsData);

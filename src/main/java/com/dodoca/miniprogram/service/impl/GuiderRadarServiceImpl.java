@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 public class GuiderRadarServiceImpl implements GuiderRadarService {
     @Override
-    @Cacheable(value = "getPartnerVitality")
+    @Cacheable(value = "GuiderRadarServiceImpl", key = "'getPartnerVitality' + #merchant_id + #member_id")
     public double getPartnerVitality(String merchant_id, String member_id) throws SQLException {
         String guiderSubaVitality = "select guider_active_per from query_result_guider_lper \n" +
                 "where merchant_id=" + merchant_id + " and member_id=" + member_id + ";";
@@ -33,7 +33,7 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
     }
 
     @Override
-    @Cacheable(value = "getPartnerDetails")
+    @Cacheable(value = "GuiderRadarServiceImpl", key = "'getPartnerDetails' + #merchant_id + #member_id")
     public List<Map<String, Object>> getPartnerDetails(String merchant_id, String member_id) throws SQLException {
         String getDetails = "select day,guider_new_day from \n" +
                 "query_result_pguider_new_day \n" +
@@ -41,7 +41,6 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
         List<Map<String, Object>> detailList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getDetails);
-
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             HashMap<String, Object> detailMap = new HashMap<>();
@@ -51,13 +50,12 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
             detailMap.put("total", total);
             detailList.add(detailMap);
         }
-
         ImpalaJdbc.close(null, pst, conn);
         return detailList;
     }
 
     @Override
-    @Cacheable(value = "getCommissionVitality")
+    @Cacheable(value = "GuiderRadarServiceImpl", key = "'getCommissionVitality' + #merchant_id + #member_id")
     public double getCommissionVitality(String merchant_id, String member_id) throws SQLException {
         String getCommissionVitality = "select guider_active_per\n" +
                 "from query_result_comission_lper \n" +
@@ -74,7 +72,7 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
     }
 
     @Override
-    @Cacheable(value = "getOrderVitality")
+    @Cacheable(value = "GuiderRadarServiceImpl", key = "'getOrderVitality' + #merchant_id + #member_id")
     public double getOrderVitality(String merchant_id, String member_id) throws SQLException {
 
         String getOrderVitality = "select  guider_active_per\n" +
@@ -89,11 +87,10 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
         }
         ImpalaJdbc.close(null, pst, conn);
         return vitality;
-
     }
 
     @Override
-    @Cacheable(value = "getOrderDetails")
+    @Cacheable(value = "GuiderRadarServiceImpl", key = "'getOrderDetails' + #merchant_id + #member_id")
     public List<Map<String, Object>> getOrderDetails(String merchant_id, String member_id) throws SQLException {
 
         String getOrderDetails = "select day,order_amount_day ,order_count_day\n" +
@@ -103,7 +100,6 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
         List<Map<String, Object>> detailList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getOrderDetails);
-
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             HashMap<String, Object> detailMap = new HashMap<>();
@@ -112,13 +108,35 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
             int order_number = rs.getInt("order_count_day");
             detailMap.put("date", date);
             detailMap.put("order_amount", order_amount);
-            detailMap.put("order_number",order_number);
+            detailMap.put("order_number", order_number);
             detailList.add(detailMap);
         }
-
         ImpalaJdbc.close(null, pst, conn);
         return detailList;
     }
 
+    @Override
+    @Cacheable(value = "GuiderRadarServiceImpl", key = "'getCommissionDetails' + #merchant_id + #member_id")
+    public List<Map<String, Object>> getCommissionDetails(String merchant_id, String member_id) throws SQLException {
+        String getOrderDetails = "select day,member_count_day\n" +
+                "from \n" +
+                "query_result_comission_count_day\n" +
+                "where merchant_id=" + merchant_id + " and member_id=" + member_id + ";";
+
+        List<Map<String, Object>> detailList = new ArrayList<>();
+        Connection conn = ImpalaJdbc.getImpalaConnection();
+        PreparedStatement pst = conn.prepareStatement(getOrderDetails);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            HashMap<String, Object> detailMap = new HashMap<>();
+            String date = rs.getString("day");
+            double member_count_day = rs.getDouble("member_count_day");
+            detailMap.put("date", date);
+            detailMap.put("total", member_count_day);
+            detailList.add(detailMap);
+        }
+        ImpalaJdbc.close(null, pst, conn);
+        return detailList;
+    }
 
 }

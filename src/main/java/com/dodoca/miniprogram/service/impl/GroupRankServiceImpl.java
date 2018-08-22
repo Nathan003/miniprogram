@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 public class GroupRankServiceImpl implements GroupRankService {
     @Override
-    @Cacheable(value = "GroupRank")
+    @Cacheable(value = "GroupRankServiceImpl", key = "'getGroupRank' + #merchant_id + #member_id")
     public List<Map<String, Object>> getGroupRank(String merchant_id, String member_id) throws SQLException {
 
         String getGroupRank = "select chat_group_id,click_count\n" +
@@ -28,7 +28,6 @@ public class GroupRankServiceImpl implements GroupRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGroupRank);
-
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             HashMap<String, Object> detailMap = new HashMap<>();
@@ -38,7 +37,6 @@ public class GroupRankServiceImpl implements GroupRankService {
             detailMap.put("result", result);
             dataList.add(detailMap);
         }
-
         ImpalaJdbc.close(null, pst, conn);
         return dataList;
     }

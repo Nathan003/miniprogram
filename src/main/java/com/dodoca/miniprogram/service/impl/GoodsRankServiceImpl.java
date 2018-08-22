@@ -17,9 +17,8 @@ import java.util.Map;
 @Service
 public class GoodsRankServiceImpl implements GoodsRankService {
     @Override
-    @Cacheable(value = "getGoodsRankService")
+    @Cacheable(value = "GoodsRankServiceImpl", key = "'getGoodsRankService' + #merchant_id")
     public List<Map<String, Object>> getGoodsRankService(String merchant_id) throws SQLException {
-
         String getGoodsRankService = "select goods_id,goods_name\n" +
                 ",max(browse_goods_cnt_total) as browse_goods_cnt_total --浏览次数\n" +
                 ",max(goods_relay_cnt_total) as goods_relay_cnt_total   --转发次数\n" +
@@ -48,7 +47,6 @@ public class GoodsRankServiceImpl implements GoodsRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGoodsRankService);
-
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             HashMap<String, Object> detailMap = new HashMap<>();
@@ -66,7 +64,6 @@ public class GoodsRankServiceImpl implements GoodsRankService {
             detailMap.put("rate_lv", rate_lv);
             dataList.add(detailMap);
         }
-
         ImpalaJdbc.close(null, pst, conn);
         return dataList;
     }

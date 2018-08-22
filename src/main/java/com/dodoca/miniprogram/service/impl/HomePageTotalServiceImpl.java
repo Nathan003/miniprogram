@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class HomePageTotalServiceImpl implements HomePageTotalService {
 
     @Override
-    @Cacheable(value = "getTotalYestodayTotal")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalYestodayTotal' + #merchant_id")
     public HashMap<String, Object> getTotalYestodayTotal(String merchant_id) throws SQLException {
         String getYestodayTotal = "select merchant_id,'昨日' as type ,max(1_pv) as 1_pv,max(1_pv2) as 1_pv2,max(member_1) as member_1\n" +
                 "from \n" +
@@ -29,7 +29,6 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
                 "where merchant_id=" + merchant_id + "\n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getYestodayTotal);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -47,7 +46,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
     }
 
     @Override
-    @Cacheable(value = "getTotalSevendaysTotal")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalSevendaysTotal' + #merchant_id")
     public HashMap<String, Object> getTotalSevendaysTotal(String merchant_id) throws SQLException {
         String getSevendaysTotal = "select merchant_id,'7天' as type ,max(7_sum_pv) as 7_sum_pv,max(7_sum_pv2) as 7_sum_pv2,max(member_7) as member_7\n" +
                 "from \n" +
@@ -61,7 +60,6 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
                 "where merchant_id=" + merchant_id + "\n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevendaysTotal);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -79,7 +77,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
     }
 
     @Override
-    @Cacheable(value = "getTotalThirtydaysTotal")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalThirtydaysTotal' + #merchant_id")
     public HashMap<String, Object> getTotalThirtydaysTotal(String merchant_id) throws SQLException {
         String getThirtydaysTotal = "select merchant_id,'30天' as type ,max(30_sum_pv) as 30_sum_pv,max(30_sum_pv2) as 30_sum_pv2,max(member_30) as member_30\n" +
                 "from \n" +
@@ -93,7 +91,6 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
                 "where merchant_id=" + merchant_id + "\n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getThirtydaysTotal);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -111,7 +108,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
     }
 
     @Override
-    @Cacheable(value = "getTotalHistoryTotal")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalHistoryTotal' + #merchant_id")
     public HashMap<String, Object> getTotalHistoryTotal(String merchant_id) throws SQLException {
         String getHistoryTotal = "select merchant_id,'历史汇总' as type ,max(all_sum_pv) as all_sum_pv,max(all_sum_pv2) as all_sum_pv2,max(member_all) as member_all\n" +
                 "from \n" +
@@ -125,7 +122,6 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
                 "where merchant_id=" + merchant_id + "\n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getHistoryTotal);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -143,7 +139,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
     }
 
     @Override
-    @Cacheable(value = "getTotalAvgTotal")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalAvgTotal' + #merchant_id")
     public HashMap<String, Object> getTotalAvgTotal(String merchant_id) throws SQLException {
         String getAvgTotal = "select merchant_id,'每日平均' as type ,max(day_pv_avg) as day_pv_avg,max(day_pv2_avg) as day_pv2_avg,max(new_member_avg) as new_member_avg\n" +
                 "from \n" +
@@ -157,7 +153,6 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
                 "where merchant_id=" + merchant_id + "\n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getAvgTotal);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -175,7 +170,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
     }
 
     @Override
-    @Cacheable(value = "getTotalMaxTotal")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalMaxTotal' + #merchant_id")
     public HashMap<String, Object> getTotalMaxTotal(String merchant_id) throws SQLException {
         String getMaxTotal = "select merchant_id,'历史峰值' as type ,max(day_pv) as day_pv,max(day_pv_2) as day_pv_2,max(new_member_max) as new_member_max\n" +
                 "from \n" +
@@ -189,7 +184,6 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
                 "where merchant_id=" + merchant_id + "\n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getMaxTotal);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -207,12 +201,11 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
     }
 
     @Override
-    @Cacheable(value = "getTotalYestodayChart")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalYestodayChart' + #merchant_id")
     public HashMap<String, Object> getTotalYestodayChart(String merchant_id) throws SQLException {
         String getYestodayChart = "select merchant_id,hour , pv_hour \n" +
                 "from query_result_pv_hour\n" +
                 "where  merchant_id=" + merchant_id + " and day_type='1_ago';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getYestodayChart);
         ResultSet rs = pst.executeQuery();
@@ -241,7 +234,6 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
         chartMap.put("21:00~21:59", "");
         chartMap.put("22:00~22:59", "");
         chartMap.put("23:00~23:59", "");
-
         while (rs.next()) {
             String hour = rs.getString("hour").replace("：", ":");
             int pv_hour = rs.getInt("pv_hour");
@@ -256,12 +248,11 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
     }
 
     @Override
-    @Cacheable(value = "getTotalTodayChart")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalTodayChart' + #merchant_id")
     public HashMap<String, Object> getTotalTodayChart(String merchant_id) throws SQLException {
         String getTodayChart = "select merchant_id,hour , pv_hour \n" +
                 "from query_result_pv_hour\n" +
                 "where  merchant_id=" + merchant_id + " and day_type='2_ago';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getTodayChart);
         ResultSet rs = pst.executeQuery();
@@ -290,7 +281,6 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
         chartMap.put("21:00~21:59", "");
         chartMap.put("22:00~22:59", "");
         chartMap.put("23:00~23:59", "");
-
         while (rs.next()) {
             String hour = rs.getString("hour").replace("：", ":");
             int pv_hour = rs.getInt("pv_hour");
@@ -305,12 +295,11 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
     }
 
     @Override
-    @Cacheable(value = "getTotalSevendaysChart")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalSevendaysChart' + #merchant_id")
     public HashMap<String, Object> getTotalSevendaysChart(String merchant_id) throws SQLException {
         String getSevendaysChart = "select merchant_id,`date`,pv_day\n" +
                 "from query_result_pv_day\n" +
                 "where merchant_id=" + merchant_id + " and day_type='7_list';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevendaysChart);
         ResultSet rs = pst.executeQuery();
@@ -325,12 +314,11 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
     }
 
     @Override
-    @Cacheable(value = "getTotalThirtydaysChart")
+    @Cacheable(value = "HomePageTotalServiceImpl", key = "'getTotalThirtydaysChart' + #merchant_id")
     public HashMap<String, Object> getTotalThirtydaysChart(String merchant_id) throws SQLException {
         String getThirtydaysChart = "select merchant_id,`date`,pv_day\n" +
                 "from query_result_pv_day\n" +
                 "where merchant_id=" + merchant_id + " and day_type='30_list';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getThirtydaysChart);
         ResultSet rs = pst.executeQuery();

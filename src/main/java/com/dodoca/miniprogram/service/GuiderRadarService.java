@@ -10,4 +10,5 @@ public interface GuiderRadarService {
     double getCommissionVitality(String merchant_id, String member_id) throws SQLException;
     double getOrderVitality(String merchant_id, String member_id) throws SQLException;
     List<Map<String,Object>> getOrderDetails(String merchant_id, String member_id) throws SQLException;
+    List<Map<String,Object>> getCommissionDetails(String merchant_id, String member_id) throws SQLException;
 }

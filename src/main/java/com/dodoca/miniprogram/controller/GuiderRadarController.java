@@ -32,10 +32,12 @@ public class GuiderRadarController {
             double commissionVitality = guiderRadarService.getCommissionVitality(merchant_id, member_id);
             double orderVitality = guiderRadarService.getOrderVitality(merchant_id, member_id);
             List<Map<String, Object>> orderDetails = guiderRadarService.getOrderDetails(merchant_id, member_id);
+            List<Map<String, Object>> commissionDetails = guiderRadarService.getCommissionDetails(merchant_id, member_id);
 
             partnerMap.put("vitality", partnerVitality);
             partnerMap.put("details", partnerDetailsList);
             commissionMap.put("vitality", commissionVitality);
+            commissionMap.put("details",commissionDetails);
             orderMap.put("details", orderDetails);
             orderMap.put("vitality", orderVitality);
             guiderMap.put("partner", partnerMap);

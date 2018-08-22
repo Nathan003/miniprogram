@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 public class GuiderRankServiceImpl implements GuiderRankService {
     @Override
-    @Cacheable(value = "getGuiderRank")
+    @Cacheable(value = "GuiderRankServiceImpl", key = "'getGuiderRank' + #merchant_id")
     public List<Map<String, Object>> getGuiderRank(String merchant_id) throws SQLException {
 
         String getGuiderRank = "select member_id , guider_name,mobile\n" +
@@ -48,7 +48,6 @@ public class GuiderRankServiceImpl implements GuiderRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGuiderRank);
-
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             HashMap<String, Object> detailMap = new HashMap<>();
@@ -70,7 +69,6 @@ public class GuiderRankServiceImpl implements GuiderRankService {
             detailMap.put("commission_amount", commission_amount);
             dataList.add(detailMap);
         }
-
         ImpalaJdbc.close(null, pst, conn);
         return dataList;
     }

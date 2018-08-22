@@ -14,7 +14,7 @@ import java.util.HashMap;
 @Service
 public class HomePageTwitterServiceImpl implements HomePageTwitterService {
     @Override
-    @Cacheable(value = "getTwitterYestodayData")
+    @Cacheable(value = "HomePageTwitterServiceImpl", key = "'getTwitterYestodayData' + #merchant_id")
     public HashMap<String, Object> getTwitterYestodayData(String merchant_id) throws SQLException {
 
         String getYestodayData = "select merchant_id,max(partner_new_1) as partner_new_1,max(partner_member_1) as partner_member_1\n" +
@@ -35,7 +35,6 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
                 ") a\n" +
                 "group by merchant_id\n" +
                 ";";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getYestodayData);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -57,7 +56,7 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
     }
 
     @Override
-    @Cacheable(value = "getTwitterSevendaysData")
+    @Cacheable(value = "HomePageTwitterServiceImpl", key = "'getTwitterSevendaysData' + #merchant_id")
     public HashMap<String, Object> getTwitterSevendaysData(String merchant_id) throws SQLException {
         String getSevendaysData = "select merchant_id,max(partner_new_7) as partner_new_7,max(partner_member_7) as partner_member_7\n" +
                 ",max(order_amount_7) as order_amount_7,max(total_comission_7) as total_comission_7,max(order_c7) as order_c7\n" +
@@ -76,7 +75,6 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
                 "where merchant_id=" + merchant_id + " \n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevendaysData);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -98,7 +96,7 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
     }
 
     @Override
-    @Cacheable(value = "getTwitterThirtydaysData")
+    @Cacheable(value = "HomePageTwitterServiceImpl", key = "'getTwitterThirtydaysData' + #merchant_id")
     public HashMap<String, Object> getTwitterThirtydaysData(String merchant_id) throws SQLException {
         String getThirtydaysData = "select merchant_id,max(partner_new_30) as partner_new_30,max(partner_member_30) as partner_member_30\n" +
                 ",max(order_amount_30) as order_amount_30,max(total_comission_30) as total_comission_30,max(order_c30) as order_c30\n" +
@@ -117,7 +115,6 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
                 "where merchant_id=" + merchant_id + " \n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getThirtydaysData);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -139,12 +136,11 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
     }
 
     @Override
-    @Cacheable(value = "getTwitterYestodayChart")
+    @Cacheable(value = "HomePageTwitterServiceImpl", key = "'getTwitterYestodayChart' + #merchant_id")
     public HashMap<String, Object> getTwitterYestodayChart(String merchant_id) throws SQLException {
         String getYestodayChart = "select merchant_id,hour , partner_hour \n" +
                 "from query_result_guider_new_hour\n" +
                 "where  merchant_id=" + merchant_id + " and day_type='1_ago';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getYestodayChart);
         ResultSet rs = pst.executeQuery();
@@ -173,7 +169,6 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
         chartMap.put("21:00~21:59", "");
         chartMap.put("22:00~22:59", "");
         chartMap.put("23:00~23:59", "");
-
         while (rs.next()) {
             String hour = rs.getString("hour").replace("：", ":");
             int partner_hour = rs.getInt("partner_hour");
@@ -188,12 +183,11 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
     }
 
     @Override
-    @Cacheable(value = "getTwitterTodayChart")
+    @Cacheable(value = "HomePageTwitterServiceImpl", key = "'getTwitterTodayChart' + #merchant_id")
     public HashMap<String, Object> getTwitterTodayChart(String merchant_id) throws SQLException {
         String getTodayChart = "select merchant_id,hour , partner_hour \n" +
                 "from query_result_guider_new_hour\n" +
                 "where  merchant_id=" + merchant_id + " and day_type='2_ago';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getTodayChart);
         ResultSet rs = pst.executeQuery();
@@ -222,7 +216,6 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
         chartMap.put("21:00~21:59", "");
         chartMap.put("22:00~22:59", "");
         chartMap.put("23:00~23:59", "");
-
         while (rs.next()) {
             String hour = rs.getString("hour").replace("：", ":");
             int partner_hour = rs.getInt("partner_hour");
@@ -237,12 +230,11 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
     }
 
     @Override
-    @Cacheable(value = "getTwitterSevendaysChart")
+    @Cacheable(value = "HomePageTwitterServiceImpl", key = "'getTwitterSevendaysChart' + #merchant_id")
     public HashMap<String, Object> getTwitterSevendaysChart(String merchant_id) throws SQLException {
         String getSevendaysChart = "select merchant_id,`day`,guider_new_day\n" +
                 "from query_result_guider_new_day\n" +
                 "where merchant_id=" + merchant_id + " and day_type='7_list';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevendaysChart);
         ResultSet rs = pst.executeQuery();
@@ -257,12 +249,11 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
     }
 
     @Override
-    @Cacheable(value = "getTwitterThirtydaysChart")
+    @Cacheable(value = "HomePageTwitterServiceImpl", key = "'getTwitterThirtydaysChart' + #merchant_id")
     public HashMap<String, Object> getTwitterThirtydaysChart(String merchant_id) throws SQLException {
         String getThirtydaysChart = "select merchant_id,`day`,guider_new_day\n" +
                 "from query_result_guider_new_day\n" +
                 "where merchant_id=" + merchant_id + " and day_type='30_list';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getThirtydaysChart);
         ResultSet rs = pst.executeQuery();

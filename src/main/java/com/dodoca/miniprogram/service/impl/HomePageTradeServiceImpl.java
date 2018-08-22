@@ -14,7 +14,7 @@ import java.util.HashMap;
 @Service
 public class HomePageTradeServiceImpl implements HomePageTradeService {
     @Override
-    @Cacheable(value = "getYestodayData")
+    @Cacheable(value = "HomePageTradeServiceImpl", key = "'getYestodayData' + #merchant_id")
     public HashMap<String, Object> getYestodayData(String merchant_id) throws SQLException {
         String getYestodayData = "select merchant_id,'昨日' as day_type,max(1_pv3) as 1_pv3,max(order_1) as order_1\n" +
                 "from \n" +
@@ -28,7 +28,6 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
                 "where merchant_id=" + merchant_id + "\n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getYestodayData);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -44,7 +43,7 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
     }
 
     @Override
-    @Cacheable(value = "getSevendaysData")
+    @Cacheable(value = "HomePageTradeServiceImpl", key = "'getSevendaysData' + #merchant_id")
     public HashMap<String, Object> getSevendaysData(String merchant_id) throws SQLException {
         String getSevendaysData = "select merchant_id,'7天' as day_type,max(7_sum_pv3) as 7_sum_pv3,max(order_7) as order_7\n" +
                 "from \n" +
@@ -58,7 +57,6 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
                 "where merchant_id=" + merchant_id + "\n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevendaysData);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -74,7 +72,7 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
     }
 
     @Override
-    @Cacheable(value = "getThirtydaysData")
+    @Cacheable(value = "HomePageTradeServiceImpl", key = "'getThirtydaysData' + #merchant_id")
     public HashMap<String, Object> getThirtydaysData(String merchant_id) throws SQLException {
         String getThirtydaysData = "select merchant_id,'30天' as day_type,max(30_sum_pv3) as 30_sum_pv3,max(order_30) as order_30\n" +
                 "from \n" +
@@ -88,7 +86,6 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
                 "where merchant_id=" + merchant_id + "\n" +
                 ") a\n" +
                 "group by merchant_id;";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getThirtydaysData);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -104,12 +101,11 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
     }
 
     @Override
-    @Cacheable(value = "getTradeYestodayChart")
+    @Cacheable(value = "HomePageTradeServiceImpl", key = "'getTradeYestodayChart' + #merchant_id")
     public HashMap<String, Object> getTradeYestodayChart(String merchant_id) throws SQLException {
         String getYestodayChart = "select merchant_id,hour , pv3_hour \n" +
                 "from query_result_pv_hour\n" +
                 "where  merchant_id=" + merchant_id + " and day_type='1_ago';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getYestodayChart);
         ResultSet rs = pst.executeQuery();
@@ -138,7 +134,6 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
         chartMap.put("21:00~21:59", "");
         chartMap.put("22:00~22:59", "");
         chartMap.put("23:00~23:59", "");
-
         while (rs.next()) {
             String hour = rs.getString("hour").replace("：", ":");
             int pv3_hour = rs.getInt("pv3_hour");
@@ -153,12 +148,11 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
     }
 
     @Override
-    @Cacheable(value = "getTradeTodayChart")
+    @Cacheable(value = "HomePageTradeServiceImpl", key = "'getTradeTodayChart' + #merchant_id")
     public HashMap<String, Object> getTradeTodayChart(String merchant_id) throws SQLException {
         String getTodayChart = "select merchant_id,hour , pv3_hour \n" +
                 "from query_result_pv_hour\n" +
                 "where merchant_id=" + merchant_id + " and day_type='2_ago';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getTodayChart);
         ResultSet rs = pst.executeQuery();
@@ -187,7 +181,6 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
         chartMap.put("21:00~21:59", "");
         chartMap.put("22:00~22:59", "");
         chartMap.put("23:00~23:59", "");
-
         while (rs.next()) {
             String hour = rs.getString("hour").replace("：", ":");
             int pv3_hour = rs.getInt("pv3_hour");
@@ -202,12 +195,11 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
     }
 
     @Override
-    @Cacheable(value = "getTradeSevendaysChart")
+    @Cacheable(value = "HomePageTradeServiceImpl", key = "'getTradeSevendaysChart' + #merchant_id")
     public HashMap<String, Object> getTradeSevendaysChart(String merchant_id) throws SQLException {
         String getSevendaysChart = "select merchant_id,`date`,pv3_day\n" +
                 "from query_result_pv_day\n" +
                 "where merchant_id=" + merchant_id + " and day_type='7_list';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevendaysChart);
         ResultSet rs = pst.executeQuery();
@@ -222,12 +214,11 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
     }
 
     @Override
-    @Cacheable(value = "getTradeThirtydaysChart")
+    @Cacheable(value = "HomePageTradeServiceImpl", key = "'getTradeThirtydaysChart' + #merchant_id")
     public HashMap<String, Object> getTradeThirtydaysChart(String merchant_id) throws SQLException {
         String getThirtydaysChart = "select merchant_id,`date`,pv3_day\n" +
                 "from query_result_pv_day\n" +
                 "where merchant_id=" + merchant_id + " and day_type='30_list';";
-
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getThirtydaysChart);
         ResultSet rs = pst.executeQuery();

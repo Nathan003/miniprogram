@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 public class GuiderSubRankServiceImpl implements GuiderSubRankService {
     @Override
-    @Cacheable(value = "GuiderSubRankByGuiderNumber")
+    @Cacheable(value = "GuiderSubRankServiceImpl", key = "'getGuiderSubRankByGuiderNumber' + #merchant_id + #member_id")
     public List<Map<String, Object>> getGuiderSubRankByGuiderNumber(String merchant_id, String member_id) throws SQLException {
         String getGuiderSubRank = "select guider_name ,avatar,l_guider_count,g_rank_total\n" +
                 "from query_result_guider_lrank \n" +
@@ -25,7 +25,6 @@ public class GuiderSubRankServiceImpl implements GuiderSubRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGuiderSubRank);
-
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             HashMap<String, Object> detailMap = new HashMap<>();
@@ -35,17 +34,16 @@ public class GuiderSubRankServiceImpl implements GuiderSubRankService {
             int rank = rs.getInt("g_rank_total");
             detailMap.put("nick_name", nick_name);
             detailMap.put("avatar", avatar);
-            detailMap.put("result",result);
-            detailMap.put("rank",rank);
+            detailMap.put("result", result);
+            detailMap.put("rank", rank);
             dataList.add(detailMap);
         }
-
         ImpalaJdbc.close(null, pst, conn);
         return dataList;
     }
 
     @Override
-    @Cacheable(value = "GuiderSubRankByCommission")
+    @Cacheable(value = "GuiderSubRankServiceImpl", key = "'getGuiderSubRankByCommission' + #merchant_id + #member_id")
     public List<Map<String, Object>> getGuiderSubRankByCommission(String merchant_id, String member_id) throws SQLException {
         String getGuiderSubRank = "select  guider_name ,avatar,total_comission, total_comission_rank\n" +
                 "from query_result_guider_lcrank \n" +
@@ -53,7 +51,6 @@ public class GuiderSubRankServiceImpl implements GuiderSubRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGuiderSubRank);
-
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             HashMap<String, Object> detailMap = new HashMap<>();
@@ -63,11 +60,10 @@ public class GuiderSubRankServiceImpl implements GuiderSubRankService {
             int rank = rs.getInt("total_comission_rank");
             detailMap.put("nick_name", nick_name);
             detailMap.put("avatar", avatar);
-            detailMap.put("total_comission",total_comission);
-            detailMap.put("rank",rank);
+            detailMap.put("total_comission", total_comission);
+            detailMap.put("rank", rank);
             dataList.add(detailMap);
         }
-
         ImpalaJdbc.close(null, pst, conn);
         return dataList;
     }
