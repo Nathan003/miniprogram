@@ -41,7 +41,7 @@ public class CommissionSubRankServiceImpl implements CommissionSubRankService {
             detailMap.put("rank", rank);
             dataList.add(detailMap);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return dataList;
     }
 }

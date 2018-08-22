@@ -31,7 +31,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", guider_count);
             detailMap.put("rank", gd_rank_total);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -53,7 +53,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", comission_guider_count);
             detailMap.put("rank", cn_guider_rank_total);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -75,14 +75,14 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", order_count_total);
             detailMap.put("rank", order_count_rank_total);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
     @Override
     @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getTotalOrderAmountData' + #merchant_id")
     public HashMap<String, Object> getTotalOrderAmountData(String merchant_id) throws SQLException {
-        String getTotalOrderAmountData = "select merchant_id,guider_name,comission_total,comission_rank_total\n" +
+        String getTotalOrderAmountData = "select merchant_id,guider_name,order_amount_total,order_amount_rank_total\n" +
                 "from query_result_guider_order\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
@@ -92,12 +92,12 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
         while (rs.next()) {
             String guider_name = rs.getString("guider_name");
             int order_amount_total = rs.getInt("order_amount_total");
-            int comission_rank_total = rs.getInt("comission_rank_total");
+            int order_amount_rank_total = rs.getInt("order_amount_rank_total");
             detailMap.put("name", guider_name);
             detailMap.put("sum", order_amount_total);
-            detailMap.put("rank", comission_rank_total);
+            detailMap.put("rank", order_amount_rank_total);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -119,7 +119,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", comission_total);
             detailMap.put("rank", comission_rank_total);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -141,7 +141,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", guider_count_1);
             detailMap.put("rank", gd_rank_1);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -163,7 +163,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", comission_guider_count_1);
             detailMap.put("rank", cn_guider_rank_1);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -185,7 +185,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", order_count_1);
             detailMap.put("rank", order_count_rank_1);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -207,7 +207,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", order_amount_1);
             detailMap.put("rank", order_amount_rank_1);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -229,7 +229,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", comission_1);
             detailMap.put("rank", comission_rank_1);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -251,14 +251,14 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", guider_count_7);
             detailMap.put("rank", gd_rank_7);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
     @Override
     @Cacheable(value = "HomePageTwitterRankServiceImpl", key = "'getSevenCommissionSubData' + #merchant_id")
     public HashMap<String, Object> getSevenCommissionSubData(String merchant_id) throws SQLException {
-        String getSevenCommissionSubData = "select merchant_id,guider_name,comission_guider_count_7,cn_guider_rank_17\n" +
+        String getSevenCommissionSubData = "select merchant_id,guider_name,comission_guider_count_7,cn_guider_rank_7\n" +
                 "from query_result_comission_low_lv_cnt\n" +
                 "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
@@ -273,7 +273,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", comission_guider_count_7);
             detailMap.put("rank", cn_guider_rank_7);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -295,7 +295,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", order_count_7);
             detailMap.put("rank", order_count_rank_7);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -317,7 +317,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", order_amount_7);
             detailMap.put("rank", order_amount_rank_7);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -339,7 +339,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", comission_7);
             detailMap.put("rank", comission_rank_7);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -361,7 +361,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", guider_count_30);
             detailMap.put("rank", gd_rank_30);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -383,7 +383,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", comission_guider_count_30);
             detailMap.put("rank", cn_guider_rank_30);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -405,7 +405,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", order_count_30);
             detailMap.put("rank", order_count_rank_30);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -427,7 +427,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", order_amount_30);
             detailMap.put("rank", order_amount_rank_30);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -449,7 +449,7 @@ public class HomePageTwitterRankServiceImpl implements HomePageTwitterRankServic
             detailMap.put("sum", comission_30);
             detailMap.put("rank", comission_rank_30);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 }

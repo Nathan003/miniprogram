@@ -51,7 +51,7 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
             detailMap.put("commission_amount", total_comission_1);
             detailMap.put("order_sum", order_c1);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -91,7 +91,7 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
             detailMap.put("commission_amount", total_comission_7);
             detailMap.put("order_sum", order_c7);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -131,7 +131,7 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
             detailMap.put("commission_amount", total_comission_30);
             detailMap.put("order_sum", order_c30);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -178,7 +178,7 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
             }
             chartMap.put(hour, partner_hour + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 
@@ -225,7 +225,7 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
             }
             chartMap.put(hour, partner_hour + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 
@@ -244,7 +244,7 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
             int guider_new_day = rs.getInt("guider_new_day");
             chartMap.put(date, guider_new_day + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 
@@ -263,7 +263,7 @@ public class HomePageTwitterServiceImpl implements HomePageTwitterService {
             int guider_new_day = rs.getInt("guider_new_day");
             chartMap.put(date, guider_new_day + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 }

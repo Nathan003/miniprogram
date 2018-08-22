@@ -38,7 +38,7 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
             detailMap.put("browse_sum", browse_sum);
             detailMap.put("order_sum", order_sum);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -67,7 +67,7 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
             detailMap.put("browse_sum", browse_sum);
             detailMap.put("order_sum", order_sum);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -96,7 +96,7 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
             detailMap.put("browse_sum", browse_sum);
             detailMap.put("order_sum", order_sum);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -143,7 +143,7 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
             }
             chartMap.put(hour, pv3_hour + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 
@@ -190,7 +190,7 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
             }
             chartMap.put(hour, pv3_hour + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 
@@ -209,7 +209,7 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
             int pv3_day = rs.getInt("pv3_day");
             chartMap.put(date, pv3_day + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 
@@ -228,7 +228,7 @@ public class HomePageTradeServiceImpl implements HomePageTradeService {
             int pv3_day = rs.getInt("pv3_day");
             chartMap.put(date, pv3_day + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 }

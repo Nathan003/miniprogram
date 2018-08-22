@@ -69,7 +69,7 @@ public class GuiderRankServiceImpl implements GuiderRankService {
             detailMap.put("commission_amount", commission_amount);
             dataList.add(detailMap);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return dataList;
     }
 }

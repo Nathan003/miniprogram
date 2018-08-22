@@ -41,7 +41,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             detailMap.put("trans_sum", trans_sum);
             detailMap.put("member_add", member_add);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -72,7 +72,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             detailMap.put("trans_sum", trans_sum);
             detailMap.put("member_add", member_add);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -103,7 +103,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             detailMap.put("trans_sum", trans_sum);
             detailMap.put("member_add", member_add);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -134,7 +134,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             detailMap.put("trans_sum", trans_sum);
             detailMap.put("member_add", member_add);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -165,7 +165,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             detailMap.put("trans_sum", trans_sum);
             detailMap.put("member_add", member_add);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -196,7 +196,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             detailMap.put("trans_sum", trans_sum);
             detailMap.put("member_add", member_add);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -243,7 +243,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             }
             chartMap.put(hour, pv_hour + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 
@@ -290,7 +290,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             }
             chartMap.put(hour, pv_hour + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 
@@ -309,7 +309,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             int pv_day = rs.getInt("pv_day");
             chartMap.put(hour, pv_day + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 
@@ -328,7 +328,7 @@ public class HomePageTotalServiceImpl implements HomePageTotalService {
             int pv_day = rs.getInt("pv_day");
             chartMap.put(hour, pv_day + "");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return chartMap;
     }
 }

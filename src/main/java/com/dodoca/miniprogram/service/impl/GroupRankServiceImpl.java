@@ -37,7 +37,7 @@ public class GroupRankServiceImpl implements GroupRankService {
             detailMap.put("result", result);
             dataList.add(detailMap);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return dataList;
     }
 }

@@ -32,7 +32,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("browse_sum", browse_goods_cnt_total);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -54,7 +54,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("order_sum", order_goods_cnt_total);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -76,7 +76,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("rebuy_percent", rebuy_percent);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -98,7 +98,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("browse_sum", browse_goods_cnt_1);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -120,7 +120,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("order_sum", order_goods_cnt_1);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -142,7 +142,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("rebuy_percent", rebuy_percent);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -164,7 +164,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("browse_sum", browse_goods_cnt_7);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -173,7 +173,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     public HashMap<String, Object> getSevendayBuyData(String merchant_id) throws SQLException {
         String getSevendayBuyData = "select merchant_id,goods_name,order_goods_cnt_7,og_rank_7\n" +
                 "from query_result_buy_rank\n" +
-                "where merchant_id=" + merchant_id + " and day_type='1_ago';";
+                "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getSevendayBuyData);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -186,7 +186,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("order_sum", order_goods_cnt_7);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -208,7 +208,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("rebuy_percent", rebuy_percent);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -230,7 +230,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("browse_sum", browse_goods_cnt_30);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -239,7 +239,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
     public HashMap<String, Object> getThirtydayBuyData(String merchant_id) throws SQLException {
         String getThirtydayBuyData = "select merchant_id,goods_name,order_goods_cnt_30,og_rank_30\n" +
                 "from query_result_buy_rank\n" +
-                "where merchant_id=" + merchant_id + " and day_type='1_ago';";
+                "where merchant_id=" + merchant_id + ";";
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getThirtydayBuyData);
         HashMap<String, Object> detailMap = new HashMap<>();
@@ -252,7 +252,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("order_sum", order_goods_cnt_30);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 
@@ -274,7 +274,7 @@ public class HomePageGoodsRankServiceImpl implements HomePageGoodsRankService {
             detailMap.put("rebuy_percent", rebuy_percent);
             detailMap.put("rank", rank);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailMap;
     }
 }

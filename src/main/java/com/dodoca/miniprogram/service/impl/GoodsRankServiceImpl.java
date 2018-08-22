@@ -47,6 +47,7 @@ public class GoodsRankServiceImpl implements GoodsRankService {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Connection conn = ImpalaJdbc.getImpalaConnection();
         PreparedStatement pst = conn.prepareStatement(getGoodsRankService);
+        System.err.println(pst.toString());
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             HashMap<String, Object> detailMap = new HashMap<>();
@@ -64,7 +65,7 @@ public class GoodsRankServiceImpl implements GoodsRankService {
             detailMap.put("rate_lv", rate_lv);
             dataList.add(detailMap);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return dataList;
     }
 }

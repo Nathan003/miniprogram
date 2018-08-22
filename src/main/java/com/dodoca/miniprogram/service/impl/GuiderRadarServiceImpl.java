@@ -28,7 +28,7 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
         while (rs.next()) {
             vitality = rs.getDouble("guider_active_per");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return vitality;
     }
 
@@ -50,7 +50,7 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
             detailMap.put("total", total);
             detailList.add(detailMap);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailList;
     }
 
@@ -67,7 +67,7 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
         while (rs.next()) {
             vitality = rs.getDouble("guider_active_per");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return vitality;
     }
 
@@ -85,7 +85,7 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
         while (rs.next()) {
             vitality = rs.getDouble("guider_active_per");
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return vitality;
     }
 
@@ -111,7 +111,7 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
             detailMap.put("order_number", order_number);
             detailList.add(detailMap);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailList;
     }
 
@@ -135,7 +135,7 @@ public class GuiderRadarServiceImpl implements GuiderRadarService {
             detailMap.put("total", member_count_day);
             detailList.add(detailMap);
         }
-        ImpalaJdbc.close(null, pst, conn);
+        ImpalaJdbc.close(rs, pst, conn);
         return detailList;
     }
 

@@ -38,12 +38,15 @@ public class ImpalaJdbc {
      */
     public static void close(ResultSet rs, PreparedStatement pst, Connection conn){
         try {
-            if(rs!=null)
+            if(rs!=null) {
                 rs.close();
-            if(pst!=null)
+            }
+            if(pst!=null) {
                 pst.close();
-            if(conn!=null)
+            }
+            if(conn!=null){
                 conn.close();
+            }
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
         }
