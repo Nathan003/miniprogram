@@ -5,5 +5,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface GuiderRankService {
-    List<Map<String, Object>> getGuiderRank(String merchant_id) throws SQLException;
+    List<Map<String, Object>> getGuiderRank(String merchant_id, String filter, String order) throws SQLException;
 }
